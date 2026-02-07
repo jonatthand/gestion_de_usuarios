@@ -1,11 +1,3 @@
-from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/")
-def home():
-    return {"message": "que lo que"} 
-
 #-------------------------------------------------------------------------------------------------------------------
 #--------------------------AUTENTITICACION DE USUARIOS--------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------
@@ -97,8 +89,3 @@ def consultar_notificaciones():
     # Manejar errores en caso de que no se puedan recuperar las notificaciones
     # Colocar en que capa se realiza cada validación (servicio, controlador, repositorio)
     return {'notificaciones': []}
-
-
-
-
-
