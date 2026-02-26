@@ -1,24 +1,59 @@
 
+from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
+from src.auth.schemas.user_schema import UserCreateSchema 
+from src.auth.repositories.user_repository import UserRepository 
+from passlib.context import CryptContext
+from src.auth.utils.jwt_handler import create_access_token
+from src.core.security import verify_password
 
-from auth.schemas.user_schema import UserCreateSchema #importa el esquema de usuario para la creación de usuarios
-from auth.repositories.user_repository import UserRepository #importa el repositorio de usuarios para interactuar con la base de datos
-from auth.securirty.password_hasher import PasswordHasher #importa la clase para hashear contraseñas
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-class AuthService: #Servicio de autenticación que maneja la lógica de negocio relacionada con usuarios
+#---------------------------------------CREAR CUENTA------------------------------------------------------------
 
-    def __init__(self): #Inicializa las dependencias del servicio
-        #__init__ es el constructor de la clase
-        #self significa que es un atributo de la clase
-        self.user_repository = UserRepository() #Repositorio para operaciones de usuario
-        self.password_hasher = PasswordHasher() #Clase para hashear contraseñas
+class AuthService:
+
+    def hash_password(self, password: str) -> str:
+        return pwd_context.hash(password)
+    
+    def verify_password(self, plain_password: str, hashed_password: str) -> bool:
+        return pwd_context.verify(plain_password, hashed_password)
+
+    def register_user(self, user_data: UserCreateSchema):
+        # Verificar si el usuario ya existe
+        existing_user = UserRepository.get_by_email(user_data.email)
+        if existing_user:
+            raise ValueError("El usuario ya existe")
+
+        # Hashear contraseña
+        hashed_password = self.hash_password(user_data.password)
+
+        # Guardar usuario
+        user = UserRepository.create(
+            email=user_data.email,
+            hashed_password=hashed_password
+        )
+
+        return user
+
+    def login_user(self, db: Session, user_data):
+
+        # 1️⃣ Buscar usuario en DB
+        user = UserRepository.get_by_email(db, user_data.email)
+
+        if not user:
+            raise HTTPException(status_code=401, detail="Credenciales inválidas")
+
+        # 2️⃣ Verificar contraseña
+        if not verify_password(user_data.password, user.password):
+            raise HTTPException(status_code=401, detail="Credenciales inválidass")
+
+        # 3️⃣ Crear token
+        token = create_access_token({"sub": user.email})
+
+        return token
+
+#--------------------------------------LOGIN-------------------------------------------------------------
 
 
-    def registrar_usuario(self, user_data: UserCreateSchema): #Registra un nuevo usuario en el sistema
-        # 1. Verificar si el mail ya existe (repositorio)
-        # 2. Valirdar reglas de negocio de la contraseña (servicio)
-        # 3. Hashear la contraseña (servicio)
-        # 4. Crear el usuario en la base de datos (repositorio)
-        # 5. Manejar errores y retornar resultados apropiados (servicio)
-        pass
-        #pass se usa para indicar que no hay implementación aún
-
+    #------------------------------------------------------------------------------

@@ -1,21 +1,22 @@
-
-
+from sqlalchemy.orm import Session
+from src.auth.models.user_model import User
 
 
 class UserRepository:
-    def __init__(self):
-        self._users = []  # Simula una base de datos en memoria
 
-    def get_by_email(self, email: str): #Busca un usuario por su correo electrónico
-        for user in self._users: #Itera sobre la lista de usuarios
-            if user["email"] == email: #Si el correo electrónico coincide
-                return user 
-        return None #Si no se encuentra el usuario, retorna None
-    
-    def create(self, email: str, password: str): #Crea un nuevo usuario
-        user = { 
-            "email": email,
-            "password": password
-        } #Agrega el nuevo usuario a la "base de datos"
-        self._users.append(user) #agrega el usuario a la lista
-        return user #Retorna el usuario creado
+    @staticmethod
+    def get_by_email(db: Session, email: str):
+        return db.query(User).filter(User.email == email).first()
+
+    @staticmethod
+    def create(db: Session, email: str, hashed_password: str):
+        user = User(
+            email=email,
+            password=hashed_password
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        return user
+
+

@@ -1,103 +1,18 @@
 from fastapi import FastAPI
+from src.auth.routers.auth_router import router as auth_router
+from src.core.database import engine, Base
+from src.auth.models.user_model import User
+from src.notifications.models.notification_model import Notification
 
-app = FastAPI()
+Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-def home():
-    return {"message": "que lo que"} 
+app = FastAPI(
+        title="TAKE HOME CHALLENGE - NOTIFICACIONES", 
+        description="API para la gestión de notificaciones con autenticación de usuarios",
+        version="1.0.0"
+)
 
-#-------------------------------------------------------------------------------------------------------------------
-#--------------------------AUTENTITICACION DE USUARIOS--------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------
-#---------------------REGISTRO DE USUARIO CON EMAIL Y CONTRASEÑA ---------------------------
-@app.post('/cuenta', tags=['Crear cuenta'])
-def crear_cuenta(email: str, password: str):
-    # validaciones BASICAS
-    # Verificar que el email tenga un formato correcto
-    # Verificar que la contraseña tenga al menos 8 caracteres  
-    # Validar que el espacio para escribir no venga vacio (investigarlo más adelante)
-    
-    # generar jwt a partir de los datos recibidos (email, password)
-    
-    #Guardar los datos en la base de datos
-
-    # Retornar error general por si llega a pasar algo en la DB 
-    # Retornar un mensaje de éxito
-    # Colocar en que capa se realiza cada validación (servicio, controlador, repositorio)
-    return {'message': 'Cuenta creada exitosamente'}
-
-#------------------------------------------------------------------------------------------------------
-#---------------------INICIO DE SESIÓN QUE DEVUELVA UN TOKEN DE ACCESO --------------------------
-@app.post('/login', tags=['Iniciar sesión'])
-def iniciar_sesion(email: str, password: str):
-    # Validar que el email y la contraseña no estén vacíos
-    # Verificar que el email exista en la base de datos
-    # Comparar la contraseña proporcionada con la almacenada en la base de datos
-    # Si las credenciales son correctas, generar un token JWT
-    # Retornar el token JWT al usuario
-    # Manejar errores como credenciales incorrectas o usuario no encontrado
-    # Colocar en que capa se realiza cada validación (servicio, controlador, repositorio)
-    return {'token': 'jwt_token_aqui'}
-#------------------------------------------------------------------------------------------------------
-#---------------------CREACION DE NOTIFICACIONES (CAMPOS: TITULO, CONTENIDO, CANAL) --------------------------
-#------------------------------------------------------------------------------------------------------
-@app.post('/notificaciones', tags=['Crear notificación'])
-def crear_notificacion(titulo: str, contenido: str, canal: str):   
-    # Validar que los campos no estén vacíos
-    # Verificar que el canal sea uno de los permitidos (email, SMS, push)
-    # Guardar la notificación en la base de datos
-    # Retornar un mensaje de éxito o error según corresponda
-    # Colocar en que capa se realiza cada validación (servicio, controlador, repositorio)
-    return {'message': 'Notificación creada exitosamente'}
-
-    #ademas cada canal debe requerir una lógica diferente para el envío de la notificación
-
-    #--------------------------------------EMAIL----------------------------------------------------------------
-    #Validar el formato del destinatario, generar un template, registral el envio
-    #
-
-    #SMS: Limitar el contenido a 160 caracteres, registrar el numero y fecha de envio
-
-
-    #PUSH NOTIFICATION: Validar el token del dispositivo, formatear el payload, registrar el estado del envio
-
-
-    #La logica debe estar preparada para agregar un nuevo canal en el futuro (ejemplo: WhatsApp)
-
-#------------------------------------------------------------------------------------------------------
-#--------------------- MODIFICAR UNA NOTIFICACION EXISTENTE --------------------------
-#------------------------------------------------------------------------------------------------------
-@app.put('/notificaciones/{notificacion_id}', tags=['Modificar notificación'])
-def modificar_notificacion(notificacion_id: int, titulo: str = None, contenido: str = None, canal: str = None):
-    # Validar que el ID de la notificación exista en la base de datos
-    # Verificar que al menos uno de los campos a modificar no esté vacío
-    # Actualizar los campos proporcionados en la base de datos
-    # Retornar un mensaje de éxito o error según corresponda
-    # Colocar en que capa se realiza cada validación (servicio, controlador, repositorio)
-    return {'message': 'Notificación modificada exitosamente'}
-
-#------------------------------------------------------------------------------------------------------
-#---------------------ELIMINAR UNA NOTIFICACION --------------------------
-#------------------------------------------------------------------------------------------------------
-@app.delete('/notificaciones/{notificacion_id}', tags=['Eliminar notificación'])
-def eliminar_notificacion(notificacion_id: int):
-    # Validar que el ID de la notificación exista en la base de datos
-    # Eliminar la notificación de la base de datos
-    # Retornar un mensaje de éxito o error según corresponda
-    # Colocar en que capa se realiza cada validación (servicio, controlador, repositorio)
-    return {'message': 'Notificación eliminada exitosamente'}
-
-#------------------------------------------------------------------------------------------------------
-#---------------------CONSULTAR TODAS LAS NOTIFICACIONES PROPIAS --------------------------
-#------------------------------------------------------------------------------------------------------
-@app.get('/notificaciones', tags=['Consultar notificaciones'])
-def consultar_notificaciones():
-    # Recuperar todas las notificaciones del usuario desde la base de datos
-    # Retornar la lista de notificaciones
-    # Manejar errores en caso de que no se puedan recuperar las notificaciones
-    # Colocar en que capa se realiza cada validación (servicio, controlador, repositorio)
-    return {'notificaciones': []}
-
+app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 
 
 
