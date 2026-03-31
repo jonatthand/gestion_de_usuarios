@@ -11,8 +11,14 @@ class PushChannel(BaseChannel):
             raise ValueError("Token inválido")
 
         payload = {
-            "title": notification["title"],
-            "body": notification["message"]
+            "to": device_token,
+            "notification": {
+                "title": notification["title"],
+                "body": notification["message"]
+            },
+            "data": {
+                "extra": "info opcional"
+                }
         }
 
         print(f"[PUSH] Enviado con payload {payload}")

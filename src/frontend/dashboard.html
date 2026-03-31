@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<h1>Notifications Dashboard</h1>
+
+<button onclick="logout()">Logout</button>
+
+<p id="message"></p>
+
+<hr>
+
+<h2>1. Crear Notificación</h2>
+
+<input id="title" placeholder="Title">
+<input id="messageInput" placeholder="Message">
+
+<select id="channel">
+  <option value="email">Email</option>
+  <option value="sms">SMS</option>
+  <option value="push">Push</option>
+</select>
+
+<input id="recipient" placeholder="Recipient">
+
+<button onclick="createNotification()">Crear</button>
+<p id="msg-create"></p>
+
+<hr>
+
+<h2>2. Listar Notificaciones</h2>
+
+<button onclick="getNotifications()">Cargar</button>
+<p id="msg-list"></p>
+
+<ul id="list"></ul>
+
+<hr>
+
+<h2>3. Obtener por ID</h2>
+
+<input id="getId" placeholder="ID">
+<button onclick="getById()">Buscar</button>
+<p id="msg-get"></p>
+
+<pre id="getResult"></pre>
+
+<hr>
+
+<h2>4. Actualizar Notificación</h2>
+
+<input id="updateId" placeholder="ID">
+<input id="newTitle" placeholder="New Title">
+
+<button onclick="updateNotification()">Actualizar</button>
+<p id="msg-update"></p>
+
+<hr>
+
+<h2>5. Eliminar Notificación</h2>
+
+<input id="deleteId" placeholder="ID">
+<button onclick="deleteNotification()">Eliminar</button>
+<p id="msg-delete"></p>
+
+<script src="app.js"></script>
+
+</body>
+</html>

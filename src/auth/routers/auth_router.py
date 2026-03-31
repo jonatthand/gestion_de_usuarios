@@ -7,7 +7,7 @@ from src.core.database import get_db
 from src.auth.repositories.user_repository import UserRepository    
 from src.auth.schemas.user_schema import UserCreateSchema, UserLoginSchema
 from src.auth.services.auth_service import AuthService
-from src.auth.utils.jwt_handler import get_current_user
+from src.auth.dependencies import get_current_user
 from src.core.security import hash_password, verify_password
 
 router = APIRouter(tags=["Auth"])
@@ -48,5 +48,5 @@ def login(user_data: UserLoginSchema, db: Session = Depends(get_db)):
 @router.get("/me")
 def read_current_user(current_user = Depends(get_current_user)):
     return {
-        "email": current_user["email"]
+        "email": current_user.email
     }

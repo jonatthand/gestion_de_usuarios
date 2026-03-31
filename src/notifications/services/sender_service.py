@@ -1,21 +1,22 @@
-from src.notifications.channels.email_channel import EmailChannel
-from src.notifications.channels.sms_channel import SMSChannel
-from src.notifications.channels.push_channel import PushChannel
+from src.notifications.strategies.email_sender import EmailSender
+from src.notifications.strategies.sms_sender import SMSSender
+from src.notifications.strategies.push_sender import PushSender
+
 
 class SenderService:
 
-    _channels = {
-        "email": EmailChannel(),
-        "sms": SMSChannel(),
-        "push": PushChannel(),
+    strategies = {
+        "email": EmailSender(),
+        "sms": SMSSender(),
+        "push": PushSender()
     }
 
     @classmethod
-    def send(cls, channel_name, notification):
+    def send(cls, notification):
 
-        channel = cls._channels.get(channel_name)
+        sender = cls.strategies.get(notification.channel)
 
-        if not channel:
+        if not sender:
             raise ValueError("Canal no soportado")
 
-        return channel.send(notification)
+        return sender.send(notification)
