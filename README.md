@@ -1,4 +1,4 @@
-![Coverage Status](https://coveralls.io/repos/github/jonatthand/gestion_de_usuario/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/jonatthand/gestion_de_usuarios/badge.svg)](https://coveralls.io/github/jonatthand/gestion_de_usuarios)
 
 # Notification Service API
 
