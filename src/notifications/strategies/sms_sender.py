@@ -10,4 +10,4 @@ class SMSSender(BaseSender):
 
         print("Enviando SMS a", notification.recipient)
 
-        return "sent"
+        return True

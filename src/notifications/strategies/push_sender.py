@@ -11,4 +11,4 @@ class PushSender(BaseSender):
         print("Formateando payload push...")
         print("Enviando notificación push")
 
-        return "sent"
+        return True

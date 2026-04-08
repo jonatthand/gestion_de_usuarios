@@ -4,13 +4,17 @@ from src.core.database import get_db
 from src.auth.dependencies import get_current_user
 from src.notifications.schemas.notification_schema import NotificationCreate
 from src.notifications.services.notification_service import NotificationService
+from src.notifications.services.sender_service import SenderService
 from src.notifications.repositories.notification_repository import NotificationRepository
 from src.notifications.schemas.notification_schema import NotificationUpdate, NotificationResponse
 
 
 router = APIRouter(tags=["Notifications"])
 
-notification_service = NotificationService()
+notification_service = NotificationService(
+    repository=NotificationRepository,
+    sender_service=SenderService
+)
 
 
 @router.post("/", response_model=NotificationResponse)

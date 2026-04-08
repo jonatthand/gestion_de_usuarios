@@ -1,3 +1,4 @@
 {
-    "scm.compactFolders": false
+    "scm.compactFolders": false,
+    "python.defaultInterpreterPath": ".venv"
 }

@@ -6,9 +6,13 @@ from fastapi import HTTPException
 
 class NotificationService:
 
+    def __init__(self, repository, sender_service):
+        self.repository = repository
+        self.sender_service = sender_service
+
     def create_notification(self, db, data, user_id):
 
-        notification = NotificationRepository.create(
+        notification = self.repository.create(
             db=db,
             title=data.title,
             message=data.message,
@@ -18,7 +22,7 @@ class NotificationService:
         )
 
         try:
-            success = SenderService.send(notification)
+            success = self.sender_service.send(notification)
 
             if success:
                 notification.status = "sent"
@@ -26,11 +30,8 @@ class NotificationService:
                 notification.status = "failed"
 
         except ValueError as e:
-            raise HTTPException(
-                status_code=400,
-                detail=str(e)
-            )
-        
+            raise HTTPException(status_code=400, detail=str(e))
+
         except Exception:
             notification.status = "failed"
 
