@@ -1,3 +1,5 @@
+![Coverage Status](https://coveralls.io/repos/github/jonatthand/gestion_de_usuario/badge.svg)
+
 # Notification Service API
 
 ## Overview
