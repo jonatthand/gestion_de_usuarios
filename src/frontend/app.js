@@ -1,7 +1,12 @@
 const API = "http://127.0.0.1:8000";
 const API_URL = "https://gestion-de-usuarios-pums.onrender.com"
 
-fetch(`${API_URL}/notifications`)
+async function getNotifications() {
+    const response = await fetch(`${API_URL}/notifications`);
+    const data = await response.json();
+
+    console.log(data);
+}
 
 function showMessage(msg, type="success"){
     const el = document.getElementById("message");
