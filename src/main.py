@@ -16,14 +16,15 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://frontend-notifications-eta.vercel.app/esarrollo"],
+    allow_origins=["https://frontend-notifications-eta.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(notification_router, prefix="/notifications", tags=["Notifications"])
+app.include_router(auth_router, prefix="/auth", tags=["Auth"])
+
 
 
 
