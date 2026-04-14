@@ -16,7 +16,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # permitir cualquier origen (solo para desarrollo)
+    allow_origins=["https://frontend-notifications-eta.vercel.app/esarrollo"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

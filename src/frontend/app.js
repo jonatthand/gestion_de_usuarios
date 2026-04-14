@@ -1,4 +1,3 @@
-const API = "http://127.0.0.1:8000";
 const API_URL = "https://gestion-de-usuarios-pums.onrender.com"
 
 async function getNotifications() {
