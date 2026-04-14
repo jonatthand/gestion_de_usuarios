@@ -1,126 +1,97 @@
 [![Coverage Status](https://coveralls.io/repos/github/jonatthand/gestion_de_usuarios/badge.svg)](https://coveralls.io/github/jonatthand/gestion_de_usuarios)
 
-# Notification Service API
+# 📦 Notification Management API
 
-## Overview
-
-Notification Service es una API desarrollada en **FastAPI** que permite crear y enviar notificaciones a través de múltiples canales (email, SMS y push).
-El proyecto implementa una arquitectura modular basada en **capas y patrones de diseño**, lo que facilita su escalabilidad y mantenimiento.
-
-La aplicación incluye:
-
-* Autenticación basada en **JWT**
-* Persistencia en base de datos
-* Envío de notificaciones mediante diferentes **estrategias**
-* Documentación automática con **Swagger**
-
-Este proyecto fue desarrollado como parte de un **technical challenge**, priorizando buenas prácticas de diseño y claridad en la arquitectura.
+API REST desarrollada con **FastAPI** para la gestión y envío de notificaciones multicanal (Email, SMS y Push), aplicando buenas prácticas de arquitectura, testing y despliegue.
 
 ---
 
-# Architecture
+## 🚀 Features
 
-La aplicación sigue una **arquitectura por capas**, separando responsabilidades para mantener el código limpio y mantenible.
+* 📬 Creación y gestión de notificaciones
+* 📡 Envío por múltiples canales:
 
-```
-Controller (API layer)
-        ↓
-Service (business logic)
-        ↓
-Repository (data access)
-        ↓
-Database
-```
-
-Además, el envío de notificaciones utiliza el **Strategy Pattern**, permitiendo cambiar el comportamiento según el canal de envío sin modificar la lógica principal.
-
-```
-SenderService
-      ↓
- ┌───────────────┬───────────────┬───────────────┐
- EmailSender     SMSSender       PushSender
-```
-
-Esto permite agregar nuevos canales de notificación sin modificar el servicio principal.
+  * Email
+  * SMS
+  * Push
+* 🧠 Patrón Strategy + Factory para selección de canal
+* 🧪 Tests unitarios con mocks
+* 🐳 Contenerización con Docker
+* 🔄 CI con GitHub Actions
+* 📊 Coverage con Coveralls
+* ☁️ Deploy en Render
 
 ---
 
-# Tech Stack
+## 🧱 Arquitectura
 
-* **Python 3.11+**
-* **FastAPI**
-* **SQLAlchemy**
-* **Pydantic**
-* **JWT Authentication**
-* **Uvicorn**
-* **SQLite** (puede reemplazarse fácilmente por PostgreSQL)
-
----
-
-# Project Structure
+El proyecto sigue principios de **Clean Architecture**:
 
 ```
 src/
-│
-├── auth
-│   ├── controllers
-│   ├── services
-│   └── schemas
-│
-├── notifications
-│   ├── controllers
-│   ├── services
-│   ├── repositories
-│   ├── strategies
-│   └── schemas
-│
-├── database
-│
-└── main.py
+├── auth/
+├── core/
+├── notifications/
+│   ├── controllers/
+│   ├── services/
+│   ├── repositories/
+│   ├── strategies/
+│   ├── models/
+├── tests/
 ```
 
-Descripción de carpetas principales:
+### Capas:
 
-| Folder       | Description                                          |
-| ------------ | ---------------------------------------------------- |
-| controllers  | Manejo de endpoints HTTP                             |
-| services     | Lógica de negocio                                    |
-| repositories | Acceso a base de datos                               |
-| strategies   | Implementación del Strategy Pattern para los canales |
-| schemas      | Modelos Pydantic para validación                     |
+* **Controllers** → Manejo de requests (FastAPI routers)
+* **Services** → Lógica de negocio
+* **Repositories** → Acceso a datos
+* **Strategies** → Envío por canal (Email, SMS, Push)
 
 ---
 
-# Installation
+## 🧠 Decisiones técnicas
 
-Clonar el repositorio:
+* Uso de **Strategy Pattern** para desacoplar canales de envío
+* Uso de **Factory Pattern** para selección dinámica del sender
+* Inyección de dependencias para facilitar testing (sin **patch**)
+* Separación clara de responsabilidades (SRP)
+
+---
+
+## 🛠️ Tecnologías
+
+* Python 3.11+
+* FastAPI
+* SQLAlchemy
+* SQLite
+* Pytest
+* Docker
+* GitHub Actions
+
+---
+
+## ⚙️ Instalación local
+
+### 1. Clonar repositorio
 
 ```bash
-git clone https://github.com/your-username/notification-service.git
-cd notification-service
+git clone https://github.com/TU_USUARIO/gestion_de_usuarios.git
+cd gestion_de_usuarios
 ```
 
-Crear entorno virtual:
+---
+
+### 2. Crear entorno virtual
 
 ```bash
 python -m venv .venv
+source .venv/bin/activate  # Linux / Mac
+.venv\Scripts\activate     # Windows
 ```
 
-Activar entorno:
+---
 
-Windows
-
-```bash
-.venv\Scripts\activate
-```
-
-Linux / Mac
-
-```bash
-source .venv/bin/activate
-```
-
-Instalar dependencias:
+### 3. Instalar dependencias
 
 ```bash
 pip install -r requirements.txt
@@ -128,190 +99,113 @@ pip install -r requirements.txt
 
 ---
 
-# Running the Project
-
-Iniciar el servidor con **Uvicorn**:
+### 4. Ejecutar la app
 
 ```bash
 uvicorn src.main:app --reload
 ```
 
-La API estará disponible en:
+---
+
+### 5. Documentación interactiva
 
 ```
-http://127.0.0.1:8000
+http://localhost:8000/docs
 ```
 
 ---
 
-# API Documentation
+## 🐳 Docker
 
-FastAPI genera documentación automática.
+### Build y run:
 
-Swagger UI:
-
-```
-http://127.0.0.1:8000/docs
-```
-
-Redoc:
-
-```
-http://127.0.0.1:8000/redoc
+```bash
+docker compose up --build
 ```
 
 ---
 
-# Authentication
+## 🧪 Testing
 
-La API utiliza **JWT (JSON Web Tokens)** para autenticación.
+Ejecutar tests:
 
-Flujo básico:
-
-1. Registrarse o iniciar sesión
-2. Obtener un **access token**
-3. Incluir el token en los requests
-
-Header requerido:
-
+```bash
+pytest
 ```
-Authorization: Bearer <token>
+
+Con coverage:
+
+```bash
+pytest --cov=src
 ```
 
 ---
 
-# API Endpoints
+## 🧪 Estrategia de testing
 
-## Auth
-
-### Register user
-
-```
-POST /auth/register
-```
-
-### Login
-
-```
-POST /auth/login
-```
-
-Devuelve un token JWT.
+* Uso de **pytest**
+* Uso de **MagicMock** para simular dependencias
+* Tests aislados del entorno (sin DB real ni servicios externos)
 
 ---
 
-## Notifications
+## 🔄 CI/CD
 
-### Create notification
+El proyecto incluye integración continua con GitHub Actions:
+
+* Instalación de dependencias
+* Ejecución de tests
+* Generación de coverage
+
+---
+
+## 📊 Coverage
+
+El coverage del proyecto se reporta mediante Coveralls.
+
+---
+
+## ☁️ Deploy
+
+API desplegada en Render:
 
 ```
-POST /notifications/notifications
-```
-
-Example request:
-
-```json
-{
-  "title": "Test notification",
-  "message": "This is a test",
-  "channel": "email",
-  "recipient": "user@example.com"
-}
-```
-
-Possible channels:
-
-```
-email
-sms
-push
+https://gestion-de-usuarios-pums.onrender.com/docs
 ```
 
 ---
 
-### Get notifications
+## ⚠️ Notas
 
-```
-GET /notifications/notifications
-```
-
-Devuelve todas las notificaciones del usuario autenticado.
+* SQLite utilizado para simplificar el entorno
+* Render en plan free puede tener latencia inicial (cold start)
 
 ---
 
-# Notification Status
+## 📌 Mejoras futuras
 
-Las notificaciones pueden tener los siguientes estados:
-
-| Status  | Description                               |
-| ------- | ----------------------------------------- |
-| created | La notificación fue creada                |
-| sent    | La notificación fue enviada correctamente |
-| failed  | Ocurrió un error durante el envío         |
-
----
-
-# Strategy Pattern Implementation
-
-El envío de notificaciones se maneja mediante el **Strategy Pattern**.
-
-Esto permite que el servicio seleccione dinámicamente el método de envío según el canal.
-
-Ejemplo simplificado:
-
-```
-SenderService
-     ↓
-Select Strategy
-     ↓
-EmailSender / SMSSender / PushSender
-```
-
-Beneficios:
-
-* Código desacoplado
-* Fácil extensión
-* Mejor mantenibilidad
-
----
-
-# Example Workflow
-
-1. Usuario autenticado crea una notificación.
-2. El sistema la guarda en la base de datos.
-3. Se selecciona la estrategia de envío según el canal.
-4. La notificación se envía.
-5. Se actualiza el estado (`sent` o `failed`).
-
----
-
-# Possible Improvements
-
-Algunas mejoras posibles para una versión productiva:
-
-* Cola de mensajes (RabbitMQ / Redis / Kafka)
-* Workers para envío asincrónico
-* Retries automáticos
+* Autenticación con JWT completa
+* Manejo de colas (RabbitMQ / Redis)
+* Persistencia en PostgreSQL
 * Rate limiting
-* Tests automatizados con pytest
-* Dockerización
+* Logs estructurados
 
 ---
 
-# Frontend (Optional)
+## 👤 Autor
 
-El proyecto puede incluir un frontend simple para consumir los endpoints de la API, permitiendo:
-
-* Login
-* Crear notificaciones
-* Listar notificaciones
-
-Esto facilita probar el sistema de manera visual.
+Jonathan
 
 ---
 
-# Author
+## 🧠 Conclusión
 
-Jonathan Daniel
+Este proyecto demuestra:
 
-Backend Developer
+* Aplicación de patrones de diseño
+* Separación de responsabilidades
+* Testing robusto
+* Preparación para producción
+* Despliegue real en la nube
+
+---
