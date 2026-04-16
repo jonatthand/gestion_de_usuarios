@@ -1,33 +1,33 @@
 [![Coverage Status](https://coveralls.io/repos/github/jonatthand/gestion_de_usuarios/badge.svg)](https://coveralls.io/github/jonatthand/gestion_de_usuarios)
 
-# 📦 Notification Management API
+# Notification Management API
 
 API REST desarrollada con **FastAPI** para la gestión y envío de notificaciones multicanal (Email, SMS y Push), aplicando buenas prácticas de arquitectura, testing y despliegue.
 
 ---
 
-## 🚀 Features
+##  Features
 
-* 📬 Creación y gestión de notificaciones
-* 📡 Envío por múltiples canales:
+*  Creación y gestión de notificaciones
+*  Envío por múltiples canales:
 
   * Email
   * SMS
   * Push
-* 🧠 Patrón Strategy + Factory para selección de canal
-* 🧪 Tests unitarios con mocks
-* 🐳 Contenerización con Docker
-* 🔄 CI con GitHub Actions
-* 📊 Coverage con Coveralls
-* ☁️ Deploy en Render
+*  Patrón Strategy + Factory para selección de canal
+*  Tests unitarios con mocks
+*  Contenerización con Docker
+*  CI con GitHub Actions
+*  Coverage con Coveralls
+*  Deploy en Render
 
 ---
 
-## 🧱 Arquitectura
+##  Arquitectura
 
 El proyecto sigue principios de **Clean Architecture**:
 
-```
+
 src/
 ├── auth/
 ├── core/
@@ -38,7 +38,7 @@ src/
 │   ├── strategies/
 │   ├── models/
 ├── tests/
-```
+
 
 ### Capas:
 
@@ -49,7 +49,7 @@ src/
 
 ---
 
-## 🧠 Decisiones técnicas
+## Decisiones técnicas
 
 * Uso de **Strategy Pattern** para desacoplar canales de envío
 * Uso de **Factory Pattern** para selección dinámica del sender
@@ -58,7 +58,7 @@ src/
 
 ---
 
-## 🛠️ Tecnologías
+## Tecnologías
 
 * Python 3.11+
 * FastAPI
@@ -70,78 +70,78 @@ src/
 
 ---
 
-## ⚙️ Instalación local
+## Instalación local
 
 ### 1. Clonar repositorio
 
-```bash
+bash
 git clone https://github.com/TU_USUARIO/gestion_de_usuarios.git
 cd gestion_de_usuarios
-```
+
 
 ---
 
 ### 2. Crear entorno virtual
 
-```bash
+bash
 python -m venv .venv
 source .venv/bin/activate  # Linux / Mac
 .venv\Scripts\activate     # Windows
-```
+
 
 ---
 
 ### 3. Instalar dependencias
 
-```bash
+bash
 pip install -r requirements.txt
-```
+
 
 ---
 
 ### 4. Ejecutar la app
 
-```bash
+bash
 uvicorn src.main:app --reload
-```
+
 
 ---
 
 ### 5. Documentación interactiva
 
-```
+
 http://localhost:8000/docs
-```
+
 
 ---
 
-## 🐳 Docker
+## Docker
 
 ### Build y run:
 
-```bash
+bash
 docker compose up --build
-```
+
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Ejecutar tests:
 
-```bash
+bash
 pytest
-```
+
 
 Con coverage:
 
-```bash
+bash
 pytest --cov=src
-```
+
 
 ---
 
-## 🧪 Estrategia de testing
+## Estrategia de testing
 
 * Uso de **pytest**
 * Uso de **MagicMock** para simular dependencias
@@ -149,7 +149,7 @@ pytest --cov=src
 
 ---
 
-## 🔄 CI/CD
+## CI/CD
 
 El proyecto incluye integración continua con GitHub Actions:
 
@@ -159,30 +159,30 @@ El proyecto incluye integración continua con GitHub Actions:
 
 ---
 
-## 📊 Coverage
+## Coverage
 
 El coverage del proyecto se reporta mediante Coveralls.
 
 ---
 
-## ☁️ Deploy
+## Deploy
 
 API desplegada en Render:
 
-```
+
 https://gestion-de-usuarios-pums.onrender.com/docs
-```
+
 
 ---
 
-## ⚠️ Notas
+## Notas
 
 * SQLite utilizado para simplificar el entorno
 * Render en plan free puede tener latencia inicial (cold start)
 
 ---
 
-## 📌 Mejoras futuras
+## Mejoras futuras
 
 * Autenticación con JWT completa
 * Manejo de colas (RabbitMQ / Redis)
@@ -192,13 +192,13 @@ https://gestion-de-usuarios-pums.onrender.com/docs
 
 ---
 
-## 👤 Autor
+## Autor
 
 Jonathan
 
 ---
 
-## 🧠 Conclusión
+## Conclusión
 
 Este proyecto demuestra:
 
