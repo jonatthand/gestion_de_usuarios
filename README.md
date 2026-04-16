@@ -23,11 +23,11 @@ API REST desarrollada con **FastAPI** para la gestión y envío de notificacione
 
 ---
 
-##  Arquitectura
+## Arquitectura
 
 El proyecto sigue principios de **Clean Architecture**:
 
-´´´
+```bash
 src/
 ├── auth/
 ├── core/
@@ -38,7 +38,7 @@ src/
 │   ├── strategies/
 │   ├── models/
 ├── tests/
-´´´
+```
 
 ### Capas:
 
@@ -74,7 +74,7 @@ src/
 
 ### 1. Clonar repositorio
 
-bash
+
 git clone https://github.com/TU_USUARIO/gestion_de_usuarios.git
 cd gestion_de_usuarios
 
@@ -83,18 +83,17 @@ cd gestion_de_usuarios
 
 ### 2. Crear entorno virtual
 
-´´´
-bash
+```bash
 python -m venv .venv
 source .venv/bin/activate  # Linux / Mac
 .venv\Scripts\activate     # Windows
-´´´
+```
 
 ---
 
 ### 3. Instalar dependencias
 
-bash
+
 pip install -r requirements.txt
 
 
@@ -102,7 +101,7 @@ pip install -r requirements.txt
 
 ### 4. Ejecutar la app
 
-bash
+
 uvicorn src.main:app --reload
 
 
@@ -120,7 +119,7 @@ http://localhost:8000/docs
 
 ### Build y run:
 
-bash
+
 docker compose up --build
 
 
@@ -130,13 +129,13 @@ docker compose up --build
 
 Ejecutar tests:
 
-bash
+
 pytest
 
 
 Con coverage:
 
-bash
+
 pytest --cov=src
 
 
@@ -195,7 +194,7 @@ https://gestion-de-usuarios-pums.onrender.com/docs
 
 ## Autor
 
-Jonathan Daniel
+Jonathan Daniel 
 
 ---
 
